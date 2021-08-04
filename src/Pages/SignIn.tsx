@@ -9,9 +9,19 @@ interface Props extends RouteComponentProps {}
 const SignIn = ({ history }: Props) => {
     return (
     <div>
-        <Link to="/SignIn">Sign in</Link>
+        <nav>
+        <Link to="SignIn">Sign in</Link>
         <Link to="/Multiplication">Multiplication</Link>
-    </div> //I want this to be buttons
+        <Link to="/Challenge">Challenge</Link>
+        <Link to="/TradeCoins">Trade coins</Link>
+        <Link to="/CreateAccount">Create account</Link>
+        <Link to='/'>Math Game</Link>
+        </nav>
+
+        <div>
+            Stuff to log in to your account
+        </div>
+    </div> //I want this to be buttons?
     );
 };
 

@@ -4,14 +4,20 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Multiplication from './Pages/Multiplication';
 import SignIn from './Pages/SignIn';
+import Challenge from './Pages/Challenge';
+import TradeCoins from './Pages/TradeCoins';
+import CreateAccount from './Pages/CreateAccount';
 import Home from './Pages/Home';
 
 const Router = () => {
     return (
         <BrowserRouter>
             <Switch>
-            <Route path="/Multiplication" component={Multiplication} />
             <Route path="/SignIn" component={SignIn} />
+            <Route path="/Multiplication" component={Multiplication} />
+            <Route path="/Challenge" component={Challenge} />
+            <Route path="/TradeCoins" component={TradeCoins} />
+            <Route path="/CreateAccount" component={CreateAccount} />
             <Route path="/" component={Home} />
             </Switch>
         </BrowserRouter>

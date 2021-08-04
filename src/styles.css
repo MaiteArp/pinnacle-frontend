@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
+
+.App {
+    text-align: center;
+    }
+
+html {
+    height: 100%;
+    }
+
+a {
+    font-family: fantasy;
+    color: whitesmoke;
+    font-size: 1.5em;
+    font-weight: bolder;
+    text-decoration: none;
+    padding: 15px;
+    }
+
+body {
+    background-image: url("./images/spacepic.jpg");
+    background-size: cover;
+    margin: 0;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    font-family: 'Architects Daughter';
+    color: whitesmoke;
+    }
+
+header {
+    margin: 50px;
+}
+
+h1 {
+    font-family: 'Architects Daughter';
+    color: whitesmoke;
+    }
+
+#tables {
+    height: 800px;
+}

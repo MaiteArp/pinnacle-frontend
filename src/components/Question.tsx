@@ -1,26 +1,31 @@
 import React from "react";
 
 type Props = {
-    question: any;
-    answer: any;//might be number might be string
-    //callback: any;
-    userAnswer: number;
-    questionsNumber: number;
-    totalQuestions: number;
+    finalAnswer: boolean;
     multipleA: number;
     multipleB: number;
+    hasResponse: boolean;
 }
 
-const Question: React.FC<Props> = ({question, answer, userAnswer, questionsNumber, totalQuestions, multipleA, multipleB, }) => {
+const Question: React.FC<Props> = ({ finalAnswer, multipleA, multipleB, hasResponse }) => {
+    const displayAnswer = () => {
+        let display:string = ""
+        if (finalAnswer === true) {
+            display = "YAY!! Correct!!"
+        } else {
+            display = "Sorry! Try again!"
+        } return display;
+    } // and display after we push the begin button
+
     return (
         <div>
             <h2 className='question'>
                 What is {multipleA} x {multipleB} ?
             </h2>
-            <h3>{"Correct or incorrect answer"}</h3>
+            { hasResponse? ( <h3 className='display'> {displayAnswer()} </h3>): null} 
         </div>
-    )
-}
+    );
+};
     
 
 export default Question;
