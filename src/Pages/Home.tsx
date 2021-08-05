@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 import Question from "../components/Question"
 import BestTime from "../components/BestTime" 
-import Treasure from "../components/Treasure"
 import Clock from "../components/Clock"
+import Treasure from "../components/Treasure"
 
 
 interface Props extends RouteComponentProps {}
@@ -21,31 +21,30 @@ const Home = ({ history }: Props) => {
     const [userAnswer, setUserAnswers] = useState(0);
     const [coins, setCoins] = useState(0);
     const [gameOver, setGameOver] = useState(true);
+    const [gameStarted, setGameStarted] = useState(false);
     const [multipleA, setMultipleA] = useState(0);// need one for each number so we can show it
     const [multipleB, setMultipleB] = useState(0);
     const [finalAnswer, setFinalAnswer] = useState(false);
     const [hasResponse, setHasResponse] = useState(false);
+    const [bestTime, setBestTime] = useState<number|null>(null);
 
     const startGame = () => {
         setLoading(true);
+        setGameStarted(true);
         setGameOver(false);
         newQuestion();
     };
 
     //function to randomize numbers and multiply them
     const newQuestion = () => {
-        let multipleA:number = Math.floor(Math.random() * (12 + 1));//random integer from 0 to 12
-        let multipleB:number = Math.floor(Math.random() * (12 + 1));// random integer from 0 to 12
+        let multipleA: number = Math.floor(Math.random() * (12 + 1));//random integer from 0 to 12
+        let multipleB: number = Math.floor(Math.random() * (12 + 1));// random integer from 0 to 12
         let correctAnswer = multipleA * multipleB
         console.log('this is the correct answer', correctAnswer); 
         setMultipleA(multipleA);
         setMultipleB(multipleB);
         setAnswer(correctAnswer); // I was missing this part that overrides the intial value 
     }; 
-
-
-    // had state here before
-
 
     //useEffect bits?
     const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -66,18 +65,15 @@ const Home = ({ history }: Props) => {
         let finalAnswer = false;
         if (answer === userAnswer) {
             finalAnswer = true;
-            
             setUserAnswers(userAnswer + 1);
             setCoins(coins + 10); //updates coins
             nextQuestion(); // adds one to the set of ten questions
             newQuestion(); // calls function to make a new question
         } else {
-            
             setUserAnswers(userAnswer + 1);
         }
-        setFinalAnswer(finalAnswer);
-        
-    }; //if input equals answer. Great!-(QUESTION_TOTAL);
+        setFinalAnswer(finalAnswer); 
+    }; 
 
 
     const nextQuestion = () => {
@@ -89,6 +85,11 @@ const Home = ({ history }: Props) => {
         }
     };
 
+    const recordGameTime = (seconds: number) => {
+        if (bestTime === null || seconds < bestTime) {
+            setBestTime(seconds);
+        }
+    }
 
     return (
         <div className="App">
@@ -96,7 +97,7 @@ const Home = ({ history }: Props) => {
         <header>
             <div>
                 <div>
-                    Times somewhere around here
+                    {gameOver && bestTime !== null ? ( <BestTime bestTime={bestTime}/> ): null}
                 </div>
 
                 <nav className='pages'>
@@ -133,7 +134,7 @@ const Home = ({ history }: Props) => {
             Treasure Chest and coins 
             </div>
             <div>
-            <Clock /> 
+            <Clock started={gameStarted} gameOver={gameOver} recordTime={recordGameTime}/> 
             </div>
         </footer>
 

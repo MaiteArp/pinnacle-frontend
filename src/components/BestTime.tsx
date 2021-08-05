@@ -1,11 +1,14 @@
 import React from "react";
+type Props = {
+    bestTime: number|null;
+}
 
-const BestTime = () => {
+const BestTime: React.FC<Props> = ({ bestTime }) => {
     return (
         <div>
-            These will display the user's best time
+            <h2> Best time {bestTime} </h2>
         </div>
-    )
-}
+    );
+};
 
 export default BestTime;
