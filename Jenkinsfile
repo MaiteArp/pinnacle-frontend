@@ -13,6 +13,7 @@ pipeline {
       steps {
         sh '''
           yarn install
+          npm test
         '''
       }
     }

@@ -13,8 +13,8 @@ interface Props extends RouteComponentProps {}
 const QUESTION_TOTAL = 10;
 
 
-const Home = ({ history }: Props) => {
-
+const Home = () => {
+//{ history }: Props
     
     const [answer, setAnswer] = useState(0); // answer is the answer to the multiplication question ... 
     const [number, setNumber] = useState(0); // this is the current question
