@@ -25,3 +25,16 @@ test('App has a "begin" button', () => {
   //Assert
   expect(beginButton).toBeInTheDocument();
 });
+
+test('App has "multiplication" link', () => {
+  //Arrange-Act
+  const history = createMemoryHistory()
+  history.push('/')
+  render(
+    <Router />
+  )
+  const multiplicationLink = screen.getByText('Multiplication');
+
+  //Assert
+  expect(multiplicationLink).toBeInTheDocument();
+});

@@ -20,9 +20,10 @@ pipeline {
   }
   post('Analysis') {
     always {
+      junit 'junit.xml'
       recordIssues(
           enabledForFailure: true, aggregatingResults: true,
-          tools: [junitParser()])
+          tools: [junitParser(pattern: 'junit.xml')])
     }
   }
 }
