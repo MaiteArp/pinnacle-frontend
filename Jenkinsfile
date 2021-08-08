@@ -13,7 +13,7 @@ pipeline {
       steps {
         sh '''
           yarn install
-          npm test:ci
+          npm run test:ci
         '''
       }
     }
