@@ -13,7 +13,7 @@ pipeline {
       steps {
         sh '''
           yarn install
-          npm test
+          npm test:ci
         '''
       }
     }
@@ -22,7 +22,7 @@ pipeline {
     always {
       recordIssues(
           enabledForFailure: true, aggregatingResults: true,
-          tools: [pyLint()])
+          tools: [junitParser()])
     }
   }
 }
