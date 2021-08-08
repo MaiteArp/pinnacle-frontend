@@ -38,3 +38,15 @@ test('App has "multiplication" link', () => {
   //Assert
   expect(multiplicationLink).toBeInTheDocument();
 });
+
+test('App has "00 sec" time', () => {
+  //Arrange-Act
+  const history = createMemoryHistory()
+  history.push('/')
+  render(
+    <Router />
+  )
+  const secTime = screen.getByText('00 sec');
+  //Assert
+  expect(secTime).toBeInTheDocument();
+});
