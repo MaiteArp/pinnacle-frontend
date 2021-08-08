@@ -5,9 +5,7 @@ type Props = {
 
 const BestTime: React.FC<Props> = ({ bestTime }) => {
     return (
-        <div>
-            <h2> Best time {bestTime} </h2>
-        </div>
+        <h2 id='besttime'> Best time {bestTime} sec</h2>
     );
 };
 

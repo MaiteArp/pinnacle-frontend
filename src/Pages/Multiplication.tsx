@@ -17,8 +17,8 @@ const Multiplication = ({ history }: Props) => {
         <header>
             <nav>
             <Link to="/SignIn">Sign in</Link>
-            <Link to="Multiplication">Multiplication</Link>
-            <Link to="/Challenge">Challenge</Link>
+            <Link to="Multiplication" className='currentpage'>Multiplication</Link>
+            <Link to="/Challenge">Send Challenge</Link>
             <Link to="/TradeCoins">Trade coins</Link>
             <Link to="/CreateAccount">Create account</Link>
             <Link to='/'>Math Game</Link>

@@ -1,11 +1,15 @@
 import React from "react";
 
-const Treasure = () => {
+type Props = {
+    coins: number;
+}
+
+const Treasure: React.FC<Props> = ({coins}) => {
     return (
         <div>
-            Coins{/* This should display the number of coins a user has */}
+            <h2>{coins} coins</h2>
         </div>
-    )
-}
+    );
+};
 
 export default Treasure;

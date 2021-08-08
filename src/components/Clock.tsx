@@ -1,14 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 
 type Props = {
+    count: number;
+    setCount: React.Dispatch<React.SetStateAction<number>>;
+
     gameOver: boolean;
     started: boolean;
-    recordTime: (arg: number) => void
+    recordTime: (arg: number) => void;
 }
 
 
-const Clock: React.FC<Props> = ({ started, gameOver, recordTime }) => {
-    const [count, setCount] = useState(0);
+const Clock: React.FC<Props> = ({ started, gameOver, recordTime, count, setCount }) => {
+    // const [count, setCount] = useState(0);
     const timerRef = useRef<NodeJS.Timeout>();
 
     useEffect(()=> {
@@ -26,8 +29,8 @@ const Clock: React.FC<Props> = ({ started, gameOver, recordTime }) => {
     }, [ timerRef, started, gameOver, setCount, recordTime ]);
 
     return (
-        <div id='clock'>
-            { count < 10 ? `0${count}`: count } sec
+        <div>
+            <h2 id='clock'> { count < 10 ? `0${count}`: count } sec </h2>
         </div>
     );
 };

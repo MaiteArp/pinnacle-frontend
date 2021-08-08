@@ -9,9 +9,9 @@ type Props = {
 
 const Question: React.FC<Props> = ({ finalAnswer, multipleA, multipleB, hasResponse }) => {
     const displayAnswer = () => {
-        let display:string = ""
+        let display:string = "" //does this need to be state?
         if (finalAnswer === true) {
-            display = "YAY!! Correct!!"
+            display = "YAY!! Correct!! next..."
         } else {
             display = "Sorry! Try again!"
         } return display;
@@ -19,10 +19,11 @@ const Question: React.FC<Props> = ({ finalAnswer, multipleA, multipleB, hasRespo
 
     return (
         <div>
+            { hasResponse? ( <h3 className='display'> {displayAnswer()} </h3>): null}
             <h2 className='question'>
                 What is {multipleA} x {multipleB} ?
             </h2>
-            { hasResponse? ( <h3 className='display'> {displayAnswer()} </h3>): null} 
+            {/* { hasResponse? ( <h3 className='display'> {displayAnswer()} </h3>): null}  */}
         </div>
     );
 };

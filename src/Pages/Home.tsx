@@ -15,9 +15,9 @@ const QUESTION_TOTAL = 10;
 
 const Home = ({ history }: Props) => {
 
-    const [loading, setLoading] = useState(false);// not sure I need this ...
+    
     const [answer, setAnswer] = useState(0); // answer is the answer to the multiplication question ... 
-    const [number, setNumber] = useState(0);
+    const [number, setNumber] = useState(0); // this is the current question
     const [userAnswer, setUserAnswers] = useState(0);
     const [coins, setCoins] = useState(0);
     const [gameOver, setGameOver] = useState(true);
@@ -28,11 +28,20 @@ const Home = ({ history }: Props) => {
     const [hasResponse, setHasResponse] = useState(false);
     const [bestTime, setBestTime] = useState<number|null>(null);
 
+    const [count, setCount] = useState(0);
+    
+    const [treasure, setTreasure] = useState(0);
+
+
     const startGame = () => {
-        setLoading(true);
+        
         setGameStarted(true);
         setGameOver(false);
         newQuestion();
+        setNumber(0);
+        setCount(0);
+        setHasResponse(false);
+        document.getElementById('input')?.focus(); // '?.' syntatic sugar to check for null before dereferencing
     };
 
     //function to randomize numbers and multiply them
@@ -75,7 +84,6 @@ const Home = ({ history }: Props) => {
         setFinalAnswer(finalAnswer); 
     }; 
 
-
     const nextQuestion = () => {
         const laterQuestion = number + 1; // name change
         if (laterQuestion === QUESTION_TOTAL) {
@@ -89,53 +97,64 @@ const Home = ({ history }: Props) => {
         if (bestTime === null || seconds < bestTime) {
             setBestTime(seconds);
         }
-    }
+    };
+
+    const collectTreasure = (coins: number) => {
+        let treasure: number = coins
+    };
 
     return (
         <div className="App">
         
         <header>
             <div>
-                <div>
-                    {gameOver && bestTime !== null ? ( <BestTime bestTime={bestTime}/> ): null}
-                </div>
-
                 <nav className='pages'>
                     <Link to='/SignIn'>Sign In</Link>
                     <Link to='/Multiplication'>Multiplication</Link>
                     <Link to='/Challenge'>Send Challenge</Link>
                     <Link to='/TradeCoins'>Trade coins</Link>
                     <Link to='/CreateAccount'>Create Account</Link>
-                    <Link to='/'>Math Game</Link>
+                    <Link to='/' className='currentpage'>Math Game</Link>
                 </nav>
             </div>
         </header>
 
         <main>
+            <section className='top'>
+            <div className='keeptime'>
+                {bestTime !== null ? ( <BestTime bestTime={bestTime}/> ): null}
+            </div>
+
             <h1> Math Game</h1>
-            {gameOver || userAnswer === QUESTION_TOTAL ? (       
-            <button className='begin' onClick={startGame}>
-                Begin
-            </button>
-            ) : null}
-            
-            <section>
-                {!gameOver ? ( <Question multipleA={multipleA} multipleB={multipleB} finalAnswer={finalAnswer} hasResponse={hasResponse}/> ) : null}
-                <input type="text" placeholder="??" onKeyPress={handleSubmit}/>
             </section>
 
-            {!gameOver ? <p className='coins'>
-            You have collected {coins} coins!
-            </p> : null}
+            <section className='middle'>
+                {gameOver ? (       
+                <button className='begin' onClick={startGame}>
+                    BEGIN
+                </button>
+                ) : null}
+
+                <div className='prompt'>
+                {!gameOver ? ( <Question multipleA={multipleA} multipleB={multipleB} finalAnswer={finalAnswer} hasResponse={hasResponse}/> ) : null}
+                <input type="text" placeholder="enter a number" onKeyPress={handleSubmit} id='input'/>
+                </div>
+
+                {!gameOver ? <p className='coins'>
+                You have collected {coins} coins!
+                </p> : null}
+            </section>
+
+            <section className='bottom'>
+                <Clock started={gameStarted} gameOver={gameOver} recordTime={recordGameTime} count={count} setCount={setCount} /> 
+                
+                <Treasure coins={coins}/>
+                
+            </section>
         </main>
 
-        <footer>
-            <div>
-            Treasure Chest and coins 
-            </div>
-            <div>
-            <Clock started={gameStarted} gameOver={gameOver} recordTime={recordGameTime}/> 
-            </div>
+        <footer className='footer'>
+            <p id='trademark'>&copy; All rights reserved</p>
         </footer>
 
         </div>

@@ -10,7 +10,7 @@ html {
     }
 
 a {
-    font-family: fantasy;
+    font-family: 'Architects Daughter';
     color: whitesmoke;
     font-size: 1.5em;
     font-weight: bolder;
@@ -18,16 +18,60 @@ a {
     padding: 15px;
     }
 
+.begin {
+    font-family: 'Architects Daughter';
+    font-weight: bold;
+    background-color: rgb(174, 14, 14);
+    border-radius: 50%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 30px;
+    padding-bottom: 27px;
+    border-color: darkred;
+}
+
+.begin:hover {
+    color: whitesmoke;
+}
+
 body {
     background-image: url("./images/spacepic.jpg");
     background-size: cover;
+    position: relative;
+    min-height: 100%;
     margin: 0;
-    padding: 0 20px;
     display: flex;
     justify-content: center;
     font-family: 'Architects Daughter';
     color: whitesmoke;
+    text-shadow: -1px -1px 0 #444, 1px -1px 0 #444, -1px 1px 0 #444, 1px 1px 0 #444;
     }
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    
+    margin-bottom: 0px;
+
+    position: absolute;
+    height: 50px;
+    left: 40px; right: 40px; bottom: 150px;
+}
+
+.bottom h2 {
+    margin-bottom: 0px;
+}
+
+.currentpage {
+    font-size: 1.75em;
+    color: olivedrab;
+}
+
+.footer {
+    position: absolute;
+    height: 41px;
+    left: 0 ; right: 0; bottom: 0;
+}
 
 header {
     margin: 50px;
@@ -36,8 +80,37 @@ header {
 h1 {
     font-family: 'Architects Daughter';
     color: whitesmoke;
-    }
+    font-size: 2.5em;
+    margin: 50px;
+    padding-top: 30px;
+}
+
+#input {
+    border-radius: 5px;
+}
+
+.keeptime {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.middle {
+    padding: 75px;
+}
+
+.prompt {
+    padding: 25px;
+}
 
 #tables {
     height: 800px;
+}
+
+#trademark {
+    text-align: center;
+    font-size: .75em;
+}
+
+.question {
+    font-size: 2em;
 }
