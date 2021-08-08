@@ -19,12 +19,11 @@ test('App has a "begin" button', () => {
   render(
     <Router />
   )
-
   const beginButton = screen.getByText('BEGIN');
-  
   //Assert
   expect(beginButton).toBeInTheDocument();
 });
+
 
 test('App has "multiplication" link', () => {
   //Arrange-Act
@@ -34,10 +33,10 @@ test('App has "multiplication" link', () => {
     <Router />
   )
   const multiplicationLink = screen.getByText('Multiplication');
-
   //Assert
   expect(multiplicationLink).toBeInTheDocument();
 });
+
 
 test('App has "00 sec" time', () => {
   //Arrange-Act
@@ -49,4 +48,28 @@ test('App has "00 sec" time', () => {
   const secTime = screen.getByText('00 sec');
   //Assert
   expect(secTime).toBeInTheDocument();
+});
+
+test('App has "0 coins" treasure', () => {
+  //Arrange-Act
+  const history = createMemoryHistory()
+  history.push('/')
+  render(
+    <Router />
+  )
+  const noCoins = screen.getByText('0 coins');
+  //Assert
+  expect(noCoins).toBeInTheDocument();
+});
+
+test('App has "enter a number" input', () => {
+  //Arrange-Act
+  const history = createMemoryHistory()
+  history.push('/')
+  render(
+    <Router />
+  )
+  const enterNumber = screen.getByPlaceholderText('enter a number');
+  //Assert
+  expect(enterNumber).toBeInTheDocument();
 });
