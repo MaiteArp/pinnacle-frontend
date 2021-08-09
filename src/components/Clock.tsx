@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 
 type Props = {
     count: number;
@@ -26,6 +26,7 @@ const Clock: React.FC<Props> = ({ started, gameOver, recordTime, count, setCount
         } else if (started === true && gameOver === true) {
             recordTime(count);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ timerRef, started, gameOver, setCount, recordTime ]);
 
     return (

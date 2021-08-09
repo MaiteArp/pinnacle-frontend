@@ -6,8 +6,8 @@ import './styles.css';
 import * as ReactDOM from 'react-dom';
 import Router from './Router';
 
-interface Props {}
-const App = ({}:Props)=> {
+
+const App = ()=> {
   return <Router />;
 };
 ReactDOM.render(<App />, document.getElementById('root'));

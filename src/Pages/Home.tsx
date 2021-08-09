@@ -1,5 +1,4 @@
 import React, { KeyboardEvent, useState } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router'; 
 import { Link } from 'react-router-dom';
 
 import Question from "../components/Question"
@@ -8,7 +7,6 @@ import Clock from "../components/Clock"
 import Treasure from "../components/Treasure"
 
 
-interface Props extends RouteComponentProps {}
 
 const QUESTION_TOTAL = 10;
 
@@ -18,7 +16,6 @@ const Home = () => {
     
     const [answer, setAnswer] = useState(0); // answer is the answer to the multiplication question ... 
     const [number, setNumber] = useState(0); // this is the current question
-    const [userAnswer, setUserAnswers] = useState(0);
     const [coins, setCoins] = useState(0);
     const [gameOver, setGameOver] = useState(true);
     const [gameStarted, setGameStarted] = useState(false);
@@ -30,7 +27,7 @@ const Home = () => {
 
     const [count, setCount] = useState(0);
     
-    const [treasure, setTreasure] = useState(0);
+    //const [treasure, setTreasure] = useState(0);
 
 
     const startGame = () => {
@@ -74,12 +71,9 @@ const Home = () => {
         let finalAnswer = false;
         if (answer === userAnswer) {
             finalAnswer = true;
-            setUserAnswers(userAnswer + 1);
             setCoins(coins + 10); //updates coins
             nextQuestion(); // adds one to the set of ten questions
             newQuestion(); // calls function to make a new question
-        } else {
-            setUserAnswers(userAnswer + 1);
         }
         setFinalAnswer(finalAnswer); 
     }; 
@@ -99,9 +93,9 @@ const Home = () => {
         }
     };
 
-    const collectTreasure = (coins: number) => {
-        let treasure: number = coins
-    };
+    // const collectTreasure = (coins: number) => {
+    //     let treasure: number = coins
+    // };
 
     return (
         <div className="App">
