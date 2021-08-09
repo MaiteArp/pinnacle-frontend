@@ -14,6 +14,9 @@ pipeline {
         sh '''
           yarn install
           npm run test:ci
+          npm run build
+          docker build -t docker.arpnetworking.com/capstone-frontend .
+          docker push docker.arpnetworking.com/capstone-frontend
         '''
       }
     }

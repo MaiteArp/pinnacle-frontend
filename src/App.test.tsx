@@ -50,6 +50,7 @@ test('App has "00 sec" time', () => {
   expect(secTime).toBeInTheDocument();
 });
 
+
 test('App has "0 coins" treasure', () => {
   //Arrange-Act
   const history = createMemoryHistory()
@@ -61,6 +62,7 @@ test('App has "0 coins" treasure', () => {
   //Assert
   expect(noCoins).toBeInTheDocument();
 });
+
 
 test('App has "enter a number" input', () => {
   //Arrange-Act
