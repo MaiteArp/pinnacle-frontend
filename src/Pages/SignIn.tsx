@@ -1,12 +1,70 @@
-import * as React from 'react';
+//import * as React from 'react';
+import axios from 'axios';
+
+import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router'; 
 import { Link } from 'react-router-dom';
+import { LoggedInUser } from '../Router';
 
-//import Title from '~/Components/Title'; // what would this be?
 
-interface Props extends RouteComponentProps {}
+interface Props extends RouteComponentProps { 
+    loggedInUser: LoggedInUser|null, 
+    setLoggedInUser: React.Dispatch<React.SetStateAction<LoggedInUser|null>>
+}
 
-const SignIn = ({ history }: Props) => {
+type UserData = {
+    name: string;
+    password: string;
+}
+
+
+const SignIn = ({ loggedInUser, setLoggedInUser }: Props) => {
+    const [loginFields, setLoginFields] = useState<UserData>({
+        name: '',
+        password: ''
+    });
+
+    const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLoginFields({
+            ...loginFields,
+            name: event.target.value
+        });
+    };
+
+    const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLoginFields({
+            ...loginFields,
+            password: event.target.value
+        });
+    };
+
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        await getExistingUser(loginFields);
+        setLoginFields({
+            name: '',
+            password: ''
+        }); 
+    };
+
+    const getExistingUser = (userData: UserData) => {
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/login`, userData,
+        {
+            params: {
+                format: 'json',
+            }
+        })
+        .then( (response) => {
+            setLoggedInUser(response.data);
+            console.log('found user')
+        })
+        .catch( (error) => {
+            console.log('error getting user');
+            console.log(error.response)
+        });
+    }; // gotta display coins and best time, maybe *'Bob's* Math Game'
+    
+
     return (
     <div>
         <header>
@@ -21,9 +79,29 @@ const SignIn = ({ history }: Props) => {
         </header>
 
         <div>
-            Stuff to log in to your account
+            <form onSubmit={onSubmit}> 
+                <div>
+                    <input 
+                    name='name'
+                    id='name'
+                    type='name'
+                    placeholder='Username'
+                    // onChange={onChange}
+                    required
+                    />
+                    <input 
+                    name='password'
+                    id='passwrod'
+                    type='password'
+                    placeholder='Password'
+                    // onChange={onChange}
+                    required
+                    />
+                    <button type='submit'>Login</button>
+                </div>
+            </form>
         </div>
-    </div> //I want this to be buttons?
+    </div> 
     );
 };
 

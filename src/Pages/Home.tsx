@@ -11,6 +11,7 @@ import Treasure from "../components/Treasure"
 const QUESTION_TOTAL = 10;
 
 
+
 const Home = () => {
 //{ history }: Props
     
@@ -26,7 +27,7 @@ const Home = () => {
     const [bestTime, setBestTime] = useState<number|null>(null);
 
     const [count, setCount] = useState(0);
-    
+
     //const [treasure, setTreasure] = useState(0);
 
 
@@ -116,9 +117,10 @@ const Home = () => {
         <main>
             <section className='top'>
             <div className='keeptime'>
+                {/* a terniary to show the user's best time if there is a user */}
                 {bestTime !== null ? ( <BestTime bestTime={bestTime}/> ): null}
             </div>
-
+            {/* a terniary to show the user's 'name'Math Game if there is a user */}
             <h1> Math Game</h1>
             </section>
 
@@ -142,8 +144,8 @@ const Home = () => {
             <section className='bottom'>
                 <Clock started={gameStarted} gameOver={gameOver} recordTime={recordGameTime} count={count} setCount={setCount} /> 
                 
-                <Treasure coins={coins}/>
-                
+                <Treasure coins={coins}/> 
+                {/* a terniary to show the user's coins if there is a user */}
             </section>
         </main>
 
