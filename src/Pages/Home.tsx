@@ -10,7 +10,7 @@ import Treasure from "../components/Treasure"
 
 const QUESTION_TOTAL = 10;
 
-
+// type Props = { id: number, name: string, coins: number, best_time: number}
 
 const Home = () => {
 //{ history }: Props
@@ -27,9 +27,10 @@ const Home = () => {
     const [bestTime, setBestTime] = useState<number|null>(null);
 
     const [count, setCount] = useState(0);
-
+    //const [userName, setUserName] = useState<string|null>(null);
+    
     //const [treasure, setTreasure] = useState(0);
-
+    //const 
 
     const startGame = () => {
         
@@ -98,6 +99,14 @@ const Home = () => {
     //     let treasure: number = coins
     // };
 
+    // const displayLoggedInUser = (loggedInUser) => {
+    //     if (loggedInUser !== null) { 
+    //    setUserName(loggedInUser[name]);
+    //    setCoins(loggedInUser[coins]);
+    //    setBestTime(loggedInUser[bestTime]);
+    //    }
+    //};
+
     return (
         <div className="App">
         
@@ -118,9 +127,11 @@ const Home = () => {
             <section className='top'>
             <div className='keeptime'>
                 {/* a terniary to show the user's best time if there is a user */}
+                {/* {loggedInUser !== null ? (<BestTime bestTime={user.bestTime}/>): null} */}
                 {bestTime !== null ? ( <BestTime bestTime={bestTime}/> ): null}
             </div>
             {/* a terniary to show the user's 'name'Math Game if there is a user */}
+            {/* {loggedInUser !== null ? (<h1>{username} Math Game</h1>): null} */}
             <h1> Math Game</h1>
             </section>
 
@@ -143,7 +154,7 @@ const Home = () => {
 
             <section className='bottom'>
                 <Clock started={gameStarted} gameOver={gameOver} recordTime={recordGameTime} count={count} setCount={setCount} /> 
-                
+                {/* {loggedInUser !== null ? (<Treasure coins={user.coins}/>): null} */}
                 <Treasure coins={coins}/> 
                 {/* a terniary to show the user's coins if there is a user */}
             </section>

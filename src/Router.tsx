@@ -9,11 +9,15 @@ import TradeCoins from './Pages/TradeCoins';
 import CreateAccount from './Pages/CreateAccount';
 import Home from './Pages/Home';
 
+
 export type LoggedInUser = {
     id: number;
     name: string;
     coins: number;
+    best_time: number;
 }
+
+
 const Router = () => {
     const [loggedInUser, setLoggedInUser] = useState<LoggedInUser|null>(null);
 

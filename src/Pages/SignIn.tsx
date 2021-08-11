@@ -13,7 +13,7 @@ interface Props extends RouteComponentProps {
 }
 
 type UserData = {
-    name: string;
+    name: string; //type for the form
     password: string;
 }
 
@@ -46,24 +46,24 @@ const SignIn = ({ loggedInUser, setLoggedInUser }: Props) => {
             password: ''
         }); 
     };
-
-    const getExistingUser = (userData: UserData) => {
-        axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/login`, userData,
-        {
-            params: {
-                format: 'json',
-            }
-        })
-        .then( (response) => {
-            setLoggedInUser(response.data);
-            console.log('found user')
-        })
-        .catch( (error) => {
-            console.log('error getting user');
-            console.log(error.response)
-        });
-    }; // gotta display coins and best time, maybe *'Bob's* Math Game'
     
+    const getExistingUser = (userData: UserData) => {
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/login`, userData, 
+            {
+                params: {
+                    format: 'json',
+                }
+            })
+            .then( (response) => {
+                setLoggedInUser(response.data);
+                console.log('found user')
+            })
+            .catch( (error) => {
+                console.log('error getting user');
+                console.log(error.response)
+            });
+    }; // gotta display coins and best time, maybe *'Bob's* Math Game'
+
 
     return (
     <div>
@@ -86,7 +86,7 @@ const SignIn = ({ loggedInUser, setLoggedInUser }: Props) => {
                     id='name'
                     type='name'
                     placeholder='Username'
-                    // onChange={onChange}
+                    onChange={onNameChange}
                     required
                     />
                     <input 
@@ -94,7 +94,7 @@ const SignIn = ({ loggedInUser, setLoggedInUser }: Props) => {
                     id='passwrod'
                     type='password'
                     placeholder='Password'
-                    // onChange={onChange}
+                    onChange={onPasswordChange}
                     required
                     />
                     <button type='submit'>Login</button>
