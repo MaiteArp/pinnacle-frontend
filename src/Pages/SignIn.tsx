@@ -1,7 +1,7 @@
 //import * as React from 'react';
 import axios from 'axios';
 
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { RouteComponentProps } from 'react-router'; 
 import { Link } from 'react-router-dom';
 import { LoggedInUser } from '../Router';
@@ -18,34 +18,19 @@ type UserData = {
 }
 
 
-const SignIn = ({ loggedInUser, setLoggedInUser }: Props) => {
-    const [loginFields, setLoginFields] = useState<UserData>({
-        name: '',
-        password: ''
-    });
-
-    const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLoginFields({
-            ...loginFields,
-            name: event.target.value
-        });
-    };
-
-    const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLoginFields({
-            ...loginFields,
-            password: event.target.value
-        });
-    };
+const SignIn = ({ history, loggedInUser, setLoggedInUser }: Props) => {
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        await getExistingUser(loginFields);
-        setLoginFields({
-            name: '',
-            password: ''
-        }); 
+        await getExistingUser({
+            "name": String(nameInput.current?.value),
+            "password": String(passwordInput.current?.value)
+        });
+        
     };
+    
+    const nameInput = useRef<HTMLInputElement>(null); 
+    const passwordInput = useRef<HTMLInputElement>(null);
     
     const getExistingUser = (userData: UserData) => {
             axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/login`, userData, 
@@ -55,12 +40,17 @@ const SignIn = ({ loggedInUser, setLoggedInUser }: Props) => {
                 }
             })
             .then( (response) => {
-                setLoggedInUser(response.data);
-                console.log('found user')
+                setLoggedInUser(response.data.user);
+                //console.log(response.data)
+                console.log(loggedInUser);
+                console.log('found user');
+
+                history.push('/');
+
             })
             .catch( (error) => {
                 console.log('error getting user');
-                console.log(error.response)
+                console.log(error.response);
             });
     }; // gotta display coins and best time, maybe *'Bob's* Math Game'
 
@@ -82,19 +72,19 @@ const SignIn = ({ loggedInUser, setLoggedInUser }: Props) => {
             <form onSubmit={onSubmit}> 
                 <div>
                     <input 
+                    ref={nameInput}
                     name='name'
                     id='name'
                     type='name'
                     placeholder='Username'
-                    onChange={onNameChange}
                     required
                     />
                     <input 
+                    ref={passwordInput}
                     name='password'
-                    id='passwrod'
+                    id='password'
                     type='password'
                     placeholder='Password'
-                    onChange={onPasswordChange}
                     required
                     />
                     <button type='submit'>Login</button>

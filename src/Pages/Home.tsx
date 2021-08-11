@@ -1,18 +1,22 @@
-import React, { KeyboardEvent, useState } from 'react';
+import React, { KeyboardEvent, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 import Question from "../components/Question"
 import BestTime from "../components/BestTime" 
 import Clock from "../components/Clock"
 import Treasure from "../components/Treasure"
+import { LoggedInUser } from '../Router';
+import { RouteComponentProps } from 'react-router';
 
 
 
 const QUESTION_TOTAL = 10;
 
-// type Props = { id: number, name: string, coins: number, best_time: number}
+interface Props extends RouteComponentProps { 
+    loggedInUser: LoggedInUser|null, 
+}
 
-const Home = () => {
+const Home = ({loggedInUser}: Props) => {
 //{ history }: Props
     
     const [answer, setAnswer] = useState(0); // answer is the answer to the multiplication question ... 
@@ -27,7 +31,7 @@ const Home = () => {
     const [bestTime, setBestTime] = useState<number|null>(null);
 
     const [count, setCount] = useState(0);
-    //const [userName, setUserName] = useState<string|null>(null);
+    const [userName, setUserName] = useState<string|null>(null);
     
     //const [treasure, setTreasure] = useState(0);
     //const 
@@ -92,20 +96,32 @@ const Home = () => {
     const recordGameTime = (seconds: number) => {
         if (bestTime === null || seconds < bestTime) {
             setBestTime(seconds);
+            //TODO: store users best time in server
+            if (loggedInUser !== null) { 
+                axios.patch(`${process.env.REACT_APP_BACKEND_URL}/users/${loggedInUser.id}`, bestTime)
+                .then( (response) => {
+                    console.log('off to db');
+                })
+                .catch( (error) => {
+                    console.log(error.response);
+
+                });
+            }
         }
-    };
+    }; 
 
     // const collectTreasure = (coins: number) => {
     //     let treasure: number = coins
     // };
 
-    // const displayLoggedInUser = (loggedInUser) => {
-    //     if (loggedInUser !== null) { 
-    //    setUserName(loggedInUser[name]);
-    //    setCoins(loggedInUser[coins]);
-    //    setBestTime(loggedInUser[bestTime]);
-    //    }
-    //};
+    useEffect (() => {
+        if (loggedInUser !== null) { 
+            setUserName(loggedInUser.name);
+            setCoins(loggedInUser.coins);
+            setBestTime(loggedInUser.best_time);
+        }
+    }, [loggedInUser]);
+
 
     return (
         <div className="App">
@@ -131,8 +147,7 @@ const Home = () => {
                 {bestTime !== null ? ( <BestTime bestTime={bestTime}/> ): null}
             </div>
             {/* a terniary to show the user's 'name'Math Game if there is a user */}
-            {/* {loggedInUser !== null ? (<h1>{username} Math Game</h1>): null} */}
-            <h1> Math Game</h1>
+            <h1> {userName !== null ? userName + "'s" : ""} Math Game</h1>
             </section>
 
             <section className='middle'>

@@ -10,7 +10,7 @@ import CreateAccount from './Pages/CreateAccount';
 import Home from './Pages/Home';
 
 
-export type LoggedInUser = {
+export type LoggedInUser = { 
     id: number;
     name: string;
     coins: number;
@@ -29,7 +29,7 @@ const Router = () => {
             <Route path="/Challenge" component={Challenge} />
             <Route path="/TradeCoins" component={TradeCoins} />
             <Route path="/CreateAccount" component={CreateAccount} />
-            <Route path="/" component={Home} />
+            <Route path="/" render={(props) => (<Home {...props} loggedInUser={loggedInUser} />)} />
             </Switch>
         </BrowserRouter>
     );
