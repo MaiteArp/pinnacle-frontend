@@ -21,7 +21,18 @@ const Challenge = ({ history }: Props) => {
         </header>
 
         <div>
-            Send a challenge button with input field for recepient 
+            <section>
+                <h2>Please log in to your account to send a challenge</h2>
+                <label>User to challenge:</label>
+                <input
+                placeholder='username'
+                required
+                />
+                <button> Send </button>
+            </section>
+            <section>
+                <h2>You have {'some number'} challenges</h2>
+            </section>
         </div>
     </div> //I want this to be buttons
     );

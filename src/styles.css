@@ -56,10 +56,27 @@ body {
     position: absolute;
     height: 50px;
     left: 40px; right: 40px; bottom: 150px;
+    z-index: -1;
 }
 
 .bottom h2 {
     margin-bottom: 0px;
+}
+
+.createUserForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.createUserForm input {
+    align-self: center;
+    max-width: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.createUserForm label {
+    align-self: center;
 }
 
 .currentpage {
@@ -94,12 +111,59 @@ h1 {
     justify-content: flex-end;
 }
 
+.loginform {
+    display: flex;
+    flex-direction: column;
+}
+
+.loginform input {
+    align-self: center;
+    max-width: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.loginform label {
+    align-self: center;
+}
+
+#login {
+    align-self: center;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #c75b11;
+    font-weight: bolder;
+}
+
+#login:hover {
+    color: whitesmoke;
+    font-family: 'Architects Daughter';
+}
+
 .middle {
     padding: 75px;
 }
 
 .prompt {
     padding: 25px;
+}
+
+.question {
+    font-size: 2em;
+}
+
+#submit {
+    align-self: center;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #c75b11;
+    font-weight: bolder;
+}
+
+#submit:hover {
+    color: whitesmoke;
+    font-family: 'Architects Daughter';
 }
 
 #tables {
@@ -111,6 +175,3 @@ h1 {
     font-size: .75em;
 }
 
-.question {
-    font-size: 2em;
-}

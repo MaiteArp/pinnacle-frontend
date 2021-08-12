@@ -13,15 +13,18 @@ import { RouteComponentProps } from 'react-router';
 const QUESTION_TOTAL = 10;
 
 interface Props extends RouteComponentProps { 
-    loggedInUser: LoggedInUser|null, 
+    loggedInUser: LoggedInUser|null; 
+    setLoggedInUser: React.Dispatch<React.SetStateAction<LoggedInUser|null>>;
+    coins: number;
+    setCoins: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Home = ({loggedInUser}: Props) => {
+const Home = ({loggedInUser, setLoggedInUser, coins, setCoins}: Props) => {
 //{ history }: Props
     
     const [answer, setAnswer] = useState(0); // answer is the answer to the multiplication question ... 
     const [number, setNumber] = useState(0); // this is the current question
-    const [coins, setCoins] = useState(0);
+    //const [coins, setCoins] = useState(0);
     const [gameOver, setGameOver] = useState(true);
     const [gameStarted, setGameStarted] = useState(false);
     const [multipleA, setMultipleA] = useState(0);// need one for each number so we can show it
@@ -32,8 +35,7 @@ const Home = ({loggedInUser}: Props) => {
 
     const [count, setCount] = useState(0);
     const [userName, setUserName] = useState<string|null>(null);
-    
-    //const [treasure, setTreasure] = useState(0);
+    //const [treasure, setTreasure] = useState(0); //these are the coins for the user in particular
     //const 
 
     const startGame = () => {
@@ -96,28 +98,38 @@ const Home = ({loggedInUser}: Props) => {
     const recordGameTime = (seconds: number) => {
         if (bestTime === null || seconds < bestTime) {
             setBestTime(seconds);
-            //TODO: store users best time in server
+            
             if (loggedInUser !== null) { 
-                axios.patch(`${process.env.REACT_APP_BACKEND_URL}/users/${loggedInUser.id}`, bestTime)
+                axios.patch(`${process.env.REACT_APP_BACKEND_URL}/users/${loggedInUser.id}`, { "best_time": seconds } )
                 .then( (response) => {
                     console.log('off to db');
                 })
                 .catch( (error) => {
                     console.log(error.response);
-
                 });
             }
-        }
-    }; 
+        } 
+        collectTreasure();
+    };   
 
-    // const collectTreasure = (coins: number) => {
-    //     let treasure: number = coins
-    // };
+    const collectTreasure = () => { 
+        if (loggedInUser !== null && coins > 0) {
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/${loggedInUser.id}/deposit`, { "amount": coins } )
+            .then( (response) => {
+                console.log('off to db');
+                setCoins(0);
+                setLoggedInUser(response.data.user);
+            })
+            .catch( (error) => {
+                console.log(error.response);
+            });
+        } 
+    };
 
     useEffect (() => {
         if (loggedInUser !== null) { 
+            collectTreasure();
             setUserName(loggedInUser.name);
-            setCoins(loggedInUser.coins);
             setBestTime(loggedInUser.best_time);
         }
     }, [loggedInUser]);
@@ -142,8 +154,6 @@ const Home = ({loggedInUser}: Props) => {
         <main>
             <section className='top'>
             <div className='keeptime'>
-                {/* a terniary to show the user's best time if there is a user */}
-                {/* {loggedInUser !== null ? (<BestTime bestTime={user.bestTime}/>): null} */}
                 {bestTime !== null ? ( <BestTime bestTime={bestTime}/> ): null}
             </div>
             {/* a terniary to show the user's 'name'Math Game if there is a user */}
@@ -169,9 +179,9 @@ const Home = ({loggedInUser}: Props) => {
 
             <section className='bottom'>
                 <Clock started={gameStarted} gameOver={gameOver} recordTime={recordGameTime} count={count} setCount={setCount} /> 
-                {/* {loggedInUser !== null ? (<Treasure coins={user.coins}/>): null} */}
-                <Treasure coins={coins}/> 
-                {/* a terniary to show the user's coins if there is a user */}
+                
+                <Treasure coins={(loggedInUser?.coins ?? 0) + coins}/> 
+                {/* a terniary? to show the user's coins if there is a user */}
             </section>
         </main>
 

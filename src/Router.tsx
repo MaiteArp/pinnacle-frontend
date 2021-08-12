@@ -20,6 +20,7 @@ export type LoggedInUser = {
 
 const Router = () => {
     const [loggedInUser, setLoggedInUser] = useState<LoggedInUser|null>(null);
+    const [coins, setCoins] = useState(0);
 
     return (
         <BrowserRouter>
@@ -29,7 +30,7 @@ const Router = () => {
             <Route path="/Challenge" component={Challenge} />
             <Route path="/TradeCoins" component={TradeCoins} />
             <Route path="/CreateAccount" component={CreateAccount} />
-            <Route path="/" render={(props) => (<Home {...props} loggedInUser={loggedInUser} />)} />
+            <Route path="/" render={(props) => (<Home {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} coins={coins} setCoins={setCoins}/>)} />
             </Switch>
         </BrowserRouter>
     );

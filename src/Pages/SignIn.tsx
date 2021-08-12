@@ -52,7 +52,7 @@ const SignIn = ({ history, loggedInUser, setLoggedInUser }: Props) => {
                 console.log('error getting user');
                 console.log(error.response);
             });
-    }; // gotta display coins and best time, maybe *'Bob's* Math Game'
+    }; 
 
 
     return (
@@ -70,7 +70,8 @@ const SignIn = ({ history, loggedInUser, setLoggedInUser }: Props) => {
 
         <div>
             <form onSubmit={onSubmit}> 
-                <div>
+                <div className='loginform'>
+                    <label>User Name:</label>
                     <input 
                     ref={nameInput}
                     name='name'
@@ -79,6 +80,7 @@ const SignIn = ({ history, loggedInUser, setLoggedInUser }: Props) => {
                     placeholder='Username'
                     required
                     />
+                    <label>Password:</label>
                     <input 
                     ref={passwordInput}
                     name='password'
@@ -87,7 +89,7 @@ const SignIn = ({ history, loggedInUser, setLoggedInUser }: Props) => {
                     placeholder='Password'
                     required
                     />
-                    <button type='submit'>Login</button>
+                    <button type='submit' id='login'>Login</button>
                 </div>
             </form>
         </div>

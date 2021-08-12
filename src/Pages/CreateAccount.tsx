@@ -72,7 +72,7 @@ const CreateAccount = ({ history }: Props) => {
         <div>
             <form onSubmit={onFormSubmit}>
                 <div className='createUserForm'>
-                    <label>User Name:</label>
+                    <label>Choose a User Name:</label>
                     <input 
                     name="name"
                     id="name"
@@ -80,7 +80,7 @@ const CreateAccount = ({ history }: Props) => {
                     onChange={onNameChange}
                     required
                     />
-                    <label>Password:</label>
+                    <label>Choose a Password:</label>
                     <input 
                     name="password"
                     id="password"
@@ -88,8 +88,8 @@ const CreateAccount = ({ history }: Props) => {
                     onChange={onPasswordChange}
                     required
                     />
+                    <button type='submit' id='submit'>SUBMIT</button>
                 </div>
-                <button type='submit'>SUBMIT</button>
             </form>
         </div>
     </div> 
