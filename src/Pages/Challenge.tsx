@@ -21,7 +21,7 @@ type ChallengeFormData = {
 }
 
 
-const Challenge = ({ history, loggedInUser, inChallenge }: Props) => {
+const Challenge = ({ history, loggedInUser, inChallenge }: Props) => { // outChallenge, setOutChallenge
 
     const onChallengeSent = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -51,9 +51,12 @@ const Challenge = ({ history, loggedInUser, inChallenge }: Props) => {
                     console.log('Oops! try again', error);
                     console.log(error?.response?.data);
                 });
-            }
+            } //setOutChallenge(newChallengeData)
         };
-
+    
+    //const acceptChallenge = () => {};
+    // history.push('/');
+    
 
     return (
     <div>
@@ -84,15 +87,16 @@ const Challenge = ({ history, loggedInUser, inChallenge }: Props) => {
                     <button type='submit'> Send </button>
                 </form>
             </section>
-            {/* {outChallenge !== null ? (): null} */}
+            {/* {outChallenge !== null ? ( */} 
             <section>
-                <p> You have challenged {} to beat your {loggedInUser?.best_time} 
-                who will be the winner?? </p>
+                <p> You have challenged {} to beat your best time of { loggedInUser?.best_time } seconds who will be the winner?? </p>
             </section>
+            {/*}): null} */}
 
             {inChallenge !== null ? ( <section>
             <h2>You have a new challenge from {} can you beat their best time of {}?</h2>
-            <button>Accept</button> 
+            <button>Accept</button> {/*on click this should take you to home and clear the 'youve been challenged'*/}
+            <h2>You can forfeit by clicking "Decline"</h2>
             <button>Decline</button>
             </section>): null}
         </div>

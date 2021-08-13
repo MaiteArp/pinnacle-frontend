@@ -21,7 +21,7 @@ export type ChallengeData = {
     winner: number; 
     challenger_id: number; 
     destination_id: number;
-}
+} //might need to add that best_time
 
 
 
@@ -37,8 +37,9 @@ const Router = () => {
             axios.get(`${process.env.REACT_APP_BACKEND_URL}/challenges/check/${loggedInUser.id}`)
             .then( (response) => {
                 console.log('trying to get challenge');
-                setInChallenge(response.data.challenges?.[0]);
-
+                let chall = response.data.challenges?.[0]
+                setInChallenge(chall); 
+                console.log("chall =", chall)
             })
             .catch( (error) => {
                 console.log(error.response)

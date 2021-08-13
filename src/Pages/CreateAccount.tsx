@@ -55,7 +55,9 @@ const CreateAccount = ({ history }: Props) => {
                 console.log('Oops! try again', error);
                 console.log(error?.response?.data);
             });
-    }; // should this go at the top??
+    }; 
+
+    // should probably display a success message! 
 
     return (
     <div>

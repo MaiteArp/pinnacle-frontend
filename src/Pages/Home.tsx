@@ -161,7 +161,7 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
             </div>
             {/* a terniary to show the user's 'name'Math Game if there is a user */}
             <h1> {userName !== null ? userName + "'s" : ""} Math Game</h1>
-            {inChallenge !== null ? ( <h2> You've been challenged </h2>): null} 
+            {inChallenge ? ( <h2> You've been challenged </h2>): null} 
             </section>
 
             <section className='middle'>
