@@ -5,7 +5,7 @@ import Question from "../components/Question"
 import BestTime from "../components/BestTime" 
 import Clock from "../components/Clock"
 import Treasure from "../components/Treasure"
-import { LoggedInUser } from '../Router';
+import { ChallengeData, LoggedInUser } from '../Router';
 import { RouteComponentProps } from 'react-router';
 
 
@@ -17,14 +17,16 @@ interface Props extends RouteComponentProps {
     setLoggedInUser: React.Dispatch<React.SetStateAction<LoggedInUser|null>>;
     coins: number;
     setCoins: React.Dispatch<React.SetStateAction<number>>;
+    inChallenge: ChallengeData|null;
+    checkChallenge: () => void;
 }
 
-const Home = ({loggedInUser, setLoggedInUser, coins, setCoins}: Props) => {
+const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, inChallenge}: Props) => {
 //{ history }: Props
     
     const [answer, setAnswer] = useState(0); // answer is the answer to the multiplication question ... 
     const [number, setNumber] = useState(0); // this is the current question
-    //const [coins, setCoins] = useState(0);
+    
     const [gameOver, setGameOver] = useState(true);
     const [gameStarted, setGameStarted] = useState(false);
     const [multipleA, setMultipleA] = useState(0);// need one for each number so we can show it
@@ -35,8 +37,7 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins}: Props) => {
 
     const [count, setCount] = useState(0);
     const [userName, setUserName] = useState<string|null>(null);
-    //const [treasure, setTreasure] = useState(0); //these are the coins for the user in particular
-    //const 
+
 
     const startGame = () => {
         
@@ -126,9 +127,11 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins}: Props) => {
         } 
     };
 
+
     useEffect (() => {
         if (loggedInUser !== null) { 
             collectTreasure();
+            checkChallenge();
             setUserName(loggedInUser.name);
             setBestTime(loggedInUser.best_time);
         }
@@ -158,6 +161,7 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins}: Props) => {
             </div>
             {/* a terniary to show the user's 'name'Math Game if there is a user */}
             <h1> {userName !== null ? userName + "'s" : ""} Math Game</h1>
+            {inChallenge !== null ? ( <h2> You've been challenged </h2>): null} 
             </section>
 
             <section className='middle'>
@@ -169,7 +173,7 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins}: Props) => {
 
                 <div className='prompt'>
                 {!gameOver ? ( <Question multipleA={multipleA} multipleB={multipleB} finalAnswer={finalAnswer} hasResponse={hasResponse}/> ) : null}
-                <input type="text" placeholder="enter a number" onKeyPress={handleSubmit} id='input'/>
+                <input type="text" placeholder="enter a number" onKeyPress={handleSubmit} id='input' autoComplete='off'/>
                 </div>
 
                 {!gameOver ? <p className='coins'>

@@ -32,6 +32,7 @@ const SignIn = ({ history, loggedInUser, setLoggedInUser }: Props) => {
     const nameInput = useRef<HTMLInputElement>(null); 
     const passwordInput = useRef<HTMLInputElement>(null);
     
+    
     const getExistingUser = (userData: UserData) => {
             axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/login`, userData, 
             {
