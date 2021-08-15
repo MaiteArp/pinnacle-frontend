@@ -18,26 +18,28 @@ export type LoggedInUser = {
 }
 export type ChallengeData = { 
     id: number; 
-    winner: number; 
+    winner: number|null; 
     challenger_id: number; 
     destination_id: number;
-} //might need to add that best_time
+    sent_time: number;
+} //might need to add that best_time: number;
 
 
 
 const Router = () => {
     const [loggedInUser, setLoggedInUser] = useState<LoggedInUser|null>(null);
     const [coins, setCoins] = useState(0);
-    //const [challengeData, setChallengeData] = useState<ChallengeData|null>(null);
+    const [activeChallenge, setActiveChallenge] = useState<ChallengeData|null>(null);
     const [inChallenge, setInChallenge] = useState<ChallengeData|null>(null);
-    //const [outChallenge, setOutChallenge] = useState<ChallengeData|null>(null);
+    const [outChallenge, setOutChallenge] = useState<ChallengeData|null>(null);
+
 
     const checkChallenge = () => {
         if (loggedInUser !== null) {
             axios.get(`${process.env.REACT_APP_BACKEND_URL}/challenges/check/${loggedInUser.id}`)
             .then( (response) => {
                 console.log('trying to get challenge');
-                let chall = response.data.challenges?.[0]
+                let chall = response.data.challenges?.[0] ?? null;
                 setInChallenge(chall); 
                 console.log("chall =", chall)
             })
@@ -52,12 +54,14 @@ const Router = () => {
             <Switch>
             <Route path="/SignIn" render={(props) => (<SignIn {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} /> )} />
             <Route path="/Multiplication" component={Multiplication} />
-            <Route path="/Challenge" render={(props) => (<Challenge {...props} loggedInUser={loggedInUser} inChallenge={inChallenge} 
-            checkChallenge={checkChallenge} /> )} />
+            <Route path="/Challenge" render={(props) => (<Challenge {...props} loggedInUser={loggedInUser} outChallenge={outChallenge} 
+            setOutChallenge={setOutChallenge} inChallenge={inChallenge} checkChallenge={checkChallenge} activeChallenge={activeChallenge} 
+            setInChallenge={setInChallenge} setActiveChallenge={setActiveChallenge} /> )} />
             <Route path="/TradeCoins" component={TradeCoins} />
             <Route path="/CreateAccount" component={CreateAccount} />
             <Route path="/" render={(props) => (<Home {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} coins={coins} 
-            setCoins={setCoins} inChallenge={inChallenge} checkChallenge={checkChallenge} />)} />
+            setCoins={setCoins} inChallenge={inChallenge} checkChallenge={checkChallenge} activeChallenge={activeChallenge} 
+            setActiveChallenge={setActiveChallenge} />)} />
             </Switch>
         </BrowserRouter>
     );
@@ -66,3 +70,4 @@ const Router = () => {
 export default Router;
 
 // outChallenge={outChallenge}
+// activeChallenge={activeChallenge}

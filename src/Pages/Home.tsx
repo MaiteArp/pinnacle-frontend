@@ -9,7 +9,6 @@ import { ChallengeData, LoggedInUser } from '../Router';
 import { RouteComponentProps } from 'react-router';
 
 
-
 const QUESTION_TOTAL = 10;
 
 interface Props extends RouteComponentProps { 
@@ -19,9 +18,11 @@ interface Props extends RouteComponentProps {
     setCoins: React.Dispatch<React.SetStateAction<number>>;
     inChallenge: ChallengeData|null;
     checkChallenge: () => void;
+    activeChallenge: ChallengeData|null;
+    setActiveChallenge: React.Dispatch<React.SetStateAction<ChallengeData|null>>;
 }
 
-const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, inChallenge}: Props) => {
+const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, inChallenge, activeChallenge, setActiveChallenge}: Props) => {
 //{ history }: Props
     
     const [answer, setAnswer] = useState(0); // answer is the answer to the multiplication question ... 
@@ -37,6 +38,8 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
 
     const [count, setCount] = useState(0);
     const [userName, setUserName] = useState<string|null>(null);
+
+    const [winnerName, setWinnerName] = useState<string|null>(null);
 
 
     const startGame = () => {
@@ -61,7 +64,7 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
         setAnswer(correctAnswer); // I was missing this part that overrides the intial value 
     }; 
 
-    //useEffect bits?
+    
     const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.code === "Enter" || e.code === "NumpadEnter") {
             e.preventDefault();
@@ -110,6 +113,9 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
                 });
             }
         } 
+        if (activeChallenge !== null) {
+            decideWinner();
+        }
         collectTreasure();
     };   
 
@@ -127,7 +133,6 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
         } 
     };
 
-
     useEffect (() => {
         if (loggedInUser !== null) { 
             collectTreasure();
@@ -137,6 +142,46 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
         }
     }, [loggedInUser]);
 
+    const decideWinner = () => {
+        if (loggedInUser !== null && inChallenge !== null) {
+            if (count !== 0 && count < inChallenge.sent_time) { 
+                inChallenge.winner = loggedInUser.id 
+            } 
+            else { 
+                inChallenge.winner = inChallenge.challenger_id
+            } axios.patch(`${process.env.REACT_APP_BACKEND_URL}/challenges/${inChallenge.id}`, {"winner": inChallenge.winner} )
+            .then( (response) => {
+                console.log('winner winner chicken dinner')
+                let challenge: ChallengeData = response.data?.challenge;
+                setActiveChallenge(challenge);
+
+            })
+            .catch( (error) => {
+                console.log(error.response);
+            });
+        } 
+    };
+
+    //to display winner
+    useEffect( () => {
+        if (loggedInUser !== null && activeChallenge !== null) {
+            if (activeChallenge.winner == null) {
+                return;
+            }
+            if (loggedInUser.id === activeChallenge.winner) {
+                setWinnerName(loggedInUser.name);
+            } else {
+                axios.get(`${process.env.REACT_APP_BACKEND_URL}/users/${activeChallenge.winner}`) // here
+                .then( (response) => {
+                    console.log('the winner');
+                    setWinnerName(response.data.name);
+                })
+                .catch( (error) => {
+                    console.log(error.response);
+                });
+            } 
+        }
+    }, [setWinnerName, activeChallenge, loggedInUser]) 
 
     return (
         <div className="App">
@@ -162,6 +207,7 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
             {/* a terniary to show the user's 'name'Math Game if there is a user */}
             <h1> {userName !== null ? userName + "'s" : ""} Math Game</h1>
             {inChallenge ? ( <h2> You've been challenged </h2>): null} 
+            {winnerName !== null ? (<h2> The winner is {winnerName} </h2>): null}
             </section>
 
             <section className='middle'>

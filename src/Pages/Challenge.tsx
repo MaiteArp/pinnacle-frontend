@@ -1,18 +1,20 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { RouteComponentProps} from 'react-router'; 
 import { Link } from 'react-router-dom';
 import { ChallengeData, LoggedInUser } from '../Router';
 import axios from 'axios';
 
-//import Title from '~/Components/Title'; // what would this be?
+
 
 interface Props extends RouteComponentProps { 
     loggedInUser: LoggedInUser|null;
     inChallenge: ChallengeData|null;
-    //outChallenge: ChallengeData|null;
-    //setOutChallenge: React.Dispatch<React.SetStateAction<ChallengeData|null>>;
+    outChallenge: ChallengeData|null;
+    activeChallenge: ChallengeData|null;
+    setActiveChallenge: React.Dispatch<React.SetStateAction<ChallengeData|null>>;
+    setOutChallenge: React.Dispatch<React.SetStateAction<ChallengeData|null>>;
+    setInChallenge: React.Dispatch<React.SetStateAction<ChallengeData|null>>;
     checkChallenge: () => void;
-
 }
 
 type ChallengeFormData = {
@@ -21,8 +23,10 @@ type ChallengeFormData = {
 }
 
 
-const Challenge = ({ history, loggedInUser, inChallenge }: Props) => { // outChallenge, setOutChallenge
-
+const Challenge = ({ history, loggedInUser, inChallenge, outChallenge, setOutChallenge, setActiveChallenge, setInChallenge }: Props) => { 
+    const [challengedName, setChallengedName] = useState<string|null>(null);
+    const [challengerName, setChallengerName] = useState<string|null>(null);
+    
     const onChallengeSent = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         await sendNewChallenge({
@@ -46,17 +50,41 @@ const Challenge = ({ history, loggedInUser, inChallenge }: Props) => { // outCha
                 .then((response) => {
                     console.log('success! New challenge sent');
                     console.log(response.data);
+                    setChallengedName(newChallengeData.challenged)
+                    setOutChallenge(response.data) //this 
                 })
                 .catch((error) => {
                     console.log('Oops! try again', error);
                     console.log(error?.response?.data);
                 });
-            } //setOutChallenge(newChallengeData)
+            } 
         };
+
+    //to display the challenger
+    useEffect(() => {
+        if (inChallenge !== null){
+            axios.get(`${process.env.REACT_APP_BACKEND_URL}/users/${inChallenge.challenger_id}`)
+            .then( (response) => {
+                console.log('the challenger')
+                setChallengerName(response.data.name);
+                
+            })
+            .catch( (error) => {
+                console.log(error.response);
+            });
+        }
+    }, [inChallenge, setChallengerName])
+
+
+    const acceptChallenge = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setActiveChallenge(inChallenge);
+        setInChallenge(null);
+        history.push('/');
+    };
     
-    //const acceptChallenge = () => {};
-    // history.push('/');
-    
+    // const declineChallenge = () => {};
+    // send back inChallengeData  
+
 
     return (
     <div>
@@ -73,29 +101,28 @@ const Challenge = ({ history, loggedInUser, inChallenge }: Props) => { // outCha
         <div>
             {/* might wat to make this display again only after winner has been sorted out */}
             <section>
-                <h2>Please log in to your account to send a challenge</h2>
+                {loggedInUser ? null : ( <h2>Please log in to your account to send a challenge</h2>)}
                 <form onSubmit={onChallengeSent}>
                     <label>User to challenge:</label>
                     <input
                     name="challenged"
                     id="challenged"
                     ref={challengedInput}
-                    
                     placeholder='destination username'
                     required
                     />  
                     <button type='submit'> Send </button>
                 </form>
             </section>
-            {/* {outChallenge !== null ? ( */} 
-            <section>
-                <p> You have challenged {} to beat your best time of { loggedInUser?.best_time } seconds who will be the winner?? </p>
-            </section>
-            {/*}): null} */}
 
-            {inChallenge !== null ? ( <section>
-            <h2>You have a new challenge from {} can you beat their best time of {}?</h2>
-            <button>Accept</button> {/*on click this should take you to home and clear the 'youve been challenged'*/}
+            {outChallenge !== null ? ( <section> 
+                <p> You have challenged {challengedName} to beat your best time of { loggedInUser?.best_time } seconds who will be the winner?? </p>
+            </section>): null}
+
+            {inChallenge != null ? ( <section>
+            <h2>You have a new challenge from {challengerName} can you beat their best time of {inChallenge.sent_time} seconds?</h2>
+            <button onClick={acceptChallenge}>Accept</button> {/*on click this should take you to home and clear the 'youve been challenged'*/}
+            
             <h2>You can forfeit by clicking "Decline"</h2>
             <button>Decline</button>
             </section>): null}
