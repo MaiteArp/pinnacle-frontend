@@ -22,7 +22,7 @@ export type ChallengeData = {
     challenger_id: number; 
     destination_id: number;
     sent_time: number;
-} //might need to add that best_time: number;
+} 
 
 
 
@@ -61,7 +61,7 @@ const Router = () => {
             <Route path="/CreateAccount" component={CreateAccount} />
             <Route path="/" render={(props) => (<Home {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} coins={coins} 
             setCoins={setCoins} inChallenge={inChallenge} checkChallenge={checkChallenge} activeChallenge={activeChallenge} 
-            setActiveChallenge={setActiveChallenge} />)} />
+            setInChallenge={setInChallenge} outChallenge={outChallenge} setOutChallenge={setOutChallenge} setActiveChallenge={setActiveChallenge} />)} />
             </Switch>
         </BrowserRouter>
     );
@@ -69,5 +69,3 @@ const Router = () => {
 
 export default Router;
 
-// outChallenge={outChallenge}
-// activeChallenge={activeChallenge}

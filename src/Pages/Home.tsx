@@ -16,13 +16,16 @@ interface Props extends RouteComponentProps {
     setLoggedInUser: React.Dispatch<React.SetStateAction<LoggedInUser|null>>;
     coins: number;
     setCoins: React.Dispatch<React.SetStateAction<number>>;
-    inChallenge: ChallengeData|null;
     checkChallenge: () => void;
+    inChallenge: ChallengeData|null;
+    setInChallenge: React.Dispatch<React.SetStateAction<ChallengeData|null>>;
     activeChallenge: ChallengeData|null;
     setActiveChallenge: React.Dispatch<React.SetStateAction<ChallengeData|null>>;
+    outChallenge: ChallengeData|null;
+    setOutChallenge: React.Dispatch<React.SetStateAction<ChallengeData|null>>;
 }
 
-const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, inChallenge, activeChallenge, setActiveChallenge}: Props) => {
+const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, inChallenge, setInChallenge, setOutChallenge, activeChallenge, setActiveChallenge}: Props) => {
 //{ history }: Props
     
     const [answer, setAnswer] = useState(0); // answer is the answer to the multiplication question ... 
@@ -183,6 +186,14 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
         }
     }, [setWinnerName, activeChallenge, loggedInUser]) 
 
+    const resetChallengeStuff = () => {
+        setInChallenge(null);
+        setActiveChallenge(null);
+        setOutChallenge(null);
+        setWinnerName(null);
+    };
+
+
     return (
         <div className="App">
         
@@ -207,8 +218,13 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
             {/* a terniary to show the user's 'name'Math Game if there is a user */}
             <h1> {userName !== null ? userName + "'s" : ""} Math Game</h1>
             {inChallenge ? ( <h2> You've been challenged </h2>): null} 
-            {winnerName !== null ? (<h2> The winner is {winnerName} </h2>): null}
             </section>
+            
+            {winnerName !== null ? (<section> 
+                <h2> The winner is {winnerName} </h2> 
+                <button onClick={resetChallengeStuff}>Done</button>
+                </section>): null}
+            
 
             <section className='middle'>
                 {gameOver ? (       

@@ -82,7 +82,23 @@ const Challenge = ({ history, loggedInUser, inChallenge, outChallenge, setOutCha
         history.push('/');
     };
     
-    // const declineChallenge = () => {};
+    const declineChallenge = (event: React.MouseEvent<HTMLButtonElement>) => {
+        //stuff here
+        let challenge = inChallenge;
+        if (challenge !== null) {
+            challenge.winner = Number(challenge?.challenger_id);
+            axios.patch(`${process.env.REACT_APP_BACKEND_URL}/challenges/${challenge.id}`, {"winner": challenge.winner} )
+            .then( (response) => {
+                console.log('we forfeited')
+                setActiveChallenge(challenge);
+                setInChallenge(null);
+            })
+            .catch( (error) => {
+                console.log(error.response);
+            });
+        }
+        history.push('/');
+    };
     // send back inChallengeData  
 
 
@@ -124,7 +140,7 @@ const Challenge = ({ history, loggedInUser, inChallenge, outChallenge, setOutCha
             <button onClick={acceptChallenge}>Accept</button> {/*on click this should take you to home and clear the 'youve been challenged'*/}
             
             <h2>You can forfeit by clicking "Decline"</h2>
-            <button>Decline</button>
+            <button onClick={declineChallenge}>Decline</button>
             </section>): null}
         </div>
     </div> 
