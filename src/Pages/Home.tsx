@@ -143,6 +143,7 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
             setUserName(loggedInUser.name);
             setBestTime(loggedInUser.best_time);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loggedInUser]);
 
     const decideWinner = () => {
