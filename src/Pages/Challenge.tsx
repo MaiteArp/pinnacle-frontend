@@ -117,8 +117,8 @@ const Challenge = ({ history, loggedInUser, inChallenge, outChallenge, setOutCha
         <div>
             {/* might wat to make this display again only after winner has been sorted out */}
             <section>
-                {loggedInUser ? null : ( <h2>Please log in to your account to send a challenge</h2>)}
-                <form onSubmit={onChallengeSent}>
+                {loggedInUser ? null : ( <h2>Please log in to your account to send a challenge.</h2>)}
+                <form onSubmit={onChallengeSent} className='challengeForm'>
                     <label>User to challenge:</label>
                     <input
                     name="challenged"
@@ -127,20 +127,21 @@ const Challenge = ({ history, loggedInUser, inChallenge, outChallenge, setOutCha
                     placeholder='destination username'
                     required
                     />  
-                    <button type='submit'> Send </button>
+                    <button type='submit' id='challengeForm'> Send </button>
                 </form>
             </section>
 
-            {outChallenge !== null ? ( <section> 
+            {outChallenge !== null ? ( <section className='outchallenge'> 
                 <p> You have challenged {challengedName} to beat your best time of { loggedInUser?.best_time } seconds who will be the winner?? </p>
             </section>): null}
 
-            {inChallenge != null ? ( <section>
+            {inChallenge != null ? ( <section className='inchallenge'>
             <h2>You have a new challenge from {challengerName} can you beat their best time of {inChallenge.sent_time} seconds?</h2>
-            <button onClick={acceptChallenge}>Accept</button> {/*on click this should take you to home and clear the 'youve been challenged'*/}
-            
-            <h2>You can forfeit by clicking "Decline"</h2>
-            <button onClick={declineChallenge}>Decline</button>
+            <h3>You can forfeit by clicking "Decline"</h3>
+            <div className='respond'>
+                <button onClick={acceptChallenge} id='accept'>Accept</button>
+                <button onClick={declineChallenge} id='decline'>Decline</button>
+            </div>
             </section>): null}
         </div>
     </div> 

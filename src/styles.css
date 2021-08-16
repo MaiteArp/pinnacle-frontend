@@ -175,3 +175,83 @@ h1 {
     font-size: .75em;
 }
 
+.challengeForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.challengeForm input {
+    align-self: center;
+    max-width: 300px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.challengeForm label {
+    align-self: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 1.5em;
+}
+
+#challengeForm {
+    align-self: center;
+    margin-top: 20px;
+    border-radius: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #c75b11;
+    font-weight: bolder;
+}
+
+#challengeForm:hover {
+    color: whitesmoke;
+    font-family: 'Architects Daughter';
+}
+
+.outchallenge p {
+    font-size: 1.5em;
+}
+
+.inchallenge button {
+    align-self: center;
+    margin-top: 20px;
+    border-radius: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #c75b11;
+    font-weight: bolder;
+}
+
+.inchallenge h2 {
+    margin-top: 100px;
+}
+
+#accept {
+    background-color: olivedrab;
+    border-color: rgb(79,104,29);
+}
+
+#accept:hover {
+    color: whitesmoke;
+    font-family: 'Architects Daughter';
+}
+
+#decline {
+    background-color: #f68a70;
+    border-color: #f57758;
+
+}
+
+#decline:hover {
+    color: whitesmoke;
+    font-family: 'Architects Daughter';
+}
+
+.respond {
+    display: flex;
+    justify-content: space-around;
+}
