@@ -223,7 +223,7 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
             
             {winnerName !== null ? (<section> 
                 <h2> The winner is {winnerName} </h2> 
-                <button onClick={resetChallengeStuff}>Done</button>
+                <button onClick={resetChallengeStuff} id='done'>Done</button>
                 </section>): null}
             
 

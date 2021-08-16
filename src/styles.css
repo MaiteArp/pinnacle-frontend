@@ -255,3 +255,15 @@ h1 {
     display: flex;
     justify-content: space-around;
 }
+
+#done {
+    font-family: 'Architects Daughter';
+    border-radius: 7px;
+    background-color: #79f1f0;
+    border-color: #5fc2c2;
+    font-weight: bolder;
+}
+
+#done:hover {
+    color: rgba(91, 91, 91, 0.797);
+}
