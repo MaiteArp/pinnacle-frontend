@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { RouteComponentProps} from 'react-router'; 
-import { Link } from 'react-router-dom';
 import { ChallengeData, LoggedInUser } from '../Router';
 import axios from 'axios';
+import NavBar from "../components/NavBar";
 
 
 
@@ -104,16 +104,8 @@ const Challenge = ({ history, loggedInUser, inChallenge, outChallenge, setOutCha
 
     return (
     <div>
-        <header>
-            <nav>
-            <Link to="/SignIn">Sign in</Link>
-            <Link to="/Multiplication">Multiplication</Link>
-            <Link to="Challenge" className='currentpage'>Send Challenge</Link>
-            <Link to="/TradeCoins">Trade coins</Link>
-            <Link to="/CreateAccount">Create account</Link>
-            <Link to='/'>Math Game</Link>
-            </nav>
-        </header>
+        <NavBar />
+
         <div>
             {/* might wat to make this display again only after winner has been sorted out */}
             <section>

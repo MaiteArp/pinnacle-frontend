@@ -1,5 +1,4 @@
 import React, { KeyboardEvent, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Question from "../components/Question"
 import BestTime from "../components/BestTime" 
@@ -7,6 +6,7 @@ import Clock from "../components/Clock"
 import Treasure from "../components/Treasure"
 import { ChallengeData, LoggedInUser } from '../Router';
 import { RouteComponentProps } from 'react-router';
+import NavBar from '../components/NavBar';
 
 
 const QUESTION_TOTAL = 10;
@@ -197,19 +197,7 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
 
     return (
         <div className="App">
-        
-        <header>
-            <div>
-                <nav className='pages'>
-                    <Link to='/SignIn'>Sign In</Link>
-                    <Link to='/Multiplication'>Multiplication</Link>
-                    <Link to='/Challenge'>Send Challenge</Link>
-                    <Link to='/TradeCoins'>Trade coins</Link>
-                    <Link to='/CreateAccount'>Create Account</Link>
-                    <Link to='/' className='currentpage'>Math Game</Link>
-                </nav>
-            </div>
-        </header>
+            <NavBar />
 
         <main>
             <section className='top'>
