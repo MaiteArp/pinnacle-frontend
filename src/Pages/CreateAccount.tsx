@@ -50,6 +50,7 @@ const CreateAccount = ({ history }: Props) => {
             .then((response) => {
                 console.log('success! New user created');
                 console.log(response.data);
+                // should I add the route to sign in?
             })
             .catch((error) => {
                 console.log('Oops! try again', error);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
@@ -32,7 +32,13 @@ const Router = () => {
     const [activeChallenge, setActiveChallenge] = useState<ChallengeData|null>(null);
     const [inChallenge, setInChallenge] = useState<ChallengeData|null>(null);
     const [outChallenge, setOutChallenge] = useState<ChallengeData|null>(null);
+    const [theme, setTheme] = useState('space');
 
+
+    useEffect(() => {
+        let body = document.getElementsByTagName('body');
+        body[0].className = theme;
+    }, [theme]);
 
     const checkChallenge = () => {
         if (loggedInUser !== null) {
@@ -47,7 +53,7 @@ const Router = () => {
                 console.log(error.response)
             })
         }
-    }; // answer will just grab state from next game 
+    }; // answer will grab state from next game 
 
     return (
         <BrowserRouter>
@@ -57,7 +63,7 @@ const Router = () => {
             <Route path="/Challenge" render={(props) => (<Challenge {...props} loggedInUser={loggedInUser} outChallenge={outChallenge} 
             setOutChallenge={setOutChallenge} inChallenge={inChallenge} checkChallenge={checkChallenge} activeChallenge={activeChallenge} 
             setInChallenge={setInChallenge} setActiveChallenge={setActiveChallenge} /> )} />
-            <Route path="/TradeCoins" component={TradeCoins} />
+            <Route path="/TradeCoins" render={(props) => (<TradeCoins {...props} setTheme={setTheme} /> )} />
             <Route path="/CreateAccount" component={CreateAccount} />
             <Route path="/" render={(props) => (<Home {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} coins={coins} 
             setCoins={setCoins} inChallenge={inChallenge} checkChallenge={checkChallenge} activeChallenge={activeChallenge} 

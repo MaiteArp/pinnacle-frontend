@@ -18,6 +18,35 @@ a {
     padding: 15px;
     }
 
+.space {
+    background-image: url("./images/spacepic.jpg");
+}
+.cute {
+    background-image: url("./images/cute.jpg");
+}
+.dogmoon {
+    background-image: url("./images/dogandmoon.jpg");
+}
+.bandw {
+    background-image: url("./images/blackandwhite.jpg");
+}
+.unicorns {
+    background-image: url("./images/skatingunicorns.jpg");
+}
+.land {
+    background-image: url("./images/spacelandscape.jpg");
+}
+.duck {
+    background-image: url("./images/blueduck.jpg");
+}
+.boom {
+    background-image: url("./images/boompow.jpg");
+}
+.elephants {
+    background-image: url("./images/elephants.jpg");
+}
+
+
 .begin {
     font-family: 'Architects Daughter';
     font-weight: bold;
@@ -35,7 +64,7 @@ a {
 }
 
 body {
-    background-image: url("./images/spacepic.jpg");
+
     background-size: cover;
     position: relative;
     min-height: 100%;
@@ -100,6 +129,12 @@ h1 {
     font-size: 2.5em;
     margin: 50px;
     padding-top: 30px;
+}
+
+input {
+    border-radius: 5px;
+    border-style: solid;
+    border-color: rgba(104, 101, 101, 0.954)
 }
 
 #input {
@@ -267,3 +302,45 @@ h1 {
 #done:hover {
     color: rgba(91, 91, 91, 0.797);
 }
+
+.choices {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around; 
+}
+
+.choices img{
+    max-width: 200px;
+    max-height: 150px;
+    margin: 50px;
+    margin-bottom: 30px;
+    border-radius: 7px;
+    border-style: solid;
+    border-color: rgba(104, 101, 101, 0.954);
+}
+
+.choices button {
+    margin-bottom: 20px;
+    font-family: 'Architects Daughter';
+    background-color: teal;
+    border-radius: 5px;
+}
+.choices button:hover {
+    color: whitesmoke;
+}
+
+.nocoins {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+.thousanscoins {
+    display: flex;
+    text-align: center;
+}
+.tenthou {
+    display: flex;
+    text-align: center;
+}
+

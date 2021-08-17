@@ -19,8 +19,7 @@ const Multiplication = ({ history }: Props) => {
         <main>
             { showChart() }
         </main>
-    </div> //I want this to be buttons?
-
+    </div> 
     );
 };
 
