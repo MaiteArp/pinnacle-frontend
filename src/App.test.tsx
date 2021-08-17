@@ -100,15 +100,16 @@ test('App home screen has name', () => {
     "id": 1,
     "name": "bob",
     "coins": 100,
-    "best_time": 89
+    "best_time": 89,
+    "theme": "space",
   }
   mock.onPost(`${process.env.REACT_APP_BACKEND_URL}/users/1/deposit`).reply(200, {"user": user});
   let ignoreSet = (arg?: any) => {};
   render(
     <BaseRouter history={history}> 
       <Route path="*" render={
-        (props) => (<Home {...props} loggedInUser={user} setLoggedInUser={ignoreSet} coins={100} 
-          setCoins={ignoreSet} inChallenge={null} checkChallenge={ignoreSet} activeChallenge={null} 
+        (props) => (<Home {...props} setInChallenge={ignoreSet} outChallenge={null} setOutChallenge={ignoreSet}  loggedInUser={user} setLoggedInUser={ignoreSet} coins={100} 
+          setCoins={ignoreSet} setTheme={ignoreSet} inChallenge={null} checkChallenge={ignoreSet} activeChallenge={null} 
           setActiveChallenge={ignoreSet}/> )} />
     </BaseRouter>
   )
@@ -126,7 +127,8 @@ test('App home screen has challenge', () => {
     "id": 1,
     "name": "bob",
     "coins": 100,
-    "best_time": 89
+    "best_time": 89,
+    "theme": "space",
   }
   let challenge = {
     "id": 1, 
@@ -141,9 +143,9 @@ test('App home screen has challenge', () => {
   render(
     <BaseRouter history={history}>
       <Route path="*" render={
-        (props) => (<Home {...props} loggedInUser={user} setLoggedInUser={ignoreSet} coins={100} 
+        (props) => (<Home {...props} setInChallenge={ignoreSet} outChallenge={null} setOutChallenge={ignoreSet} loggedInUser={user} setLoggedInUser={ignoreSet} coins={100} 
           setCoins={ignoreSet} inChallenge={challenge} checkChallenge={ignoreSet} activeChallenge={null} 
-          setActiveChallenge={ignoreSet}/> )} />
+          setActiveChallenge={ignoreSet} setTheme={ignoreSet} /> )} />
     </BaseRouter>
   )
   const userMathGame = screen.getByText(`You've been challenged`);
