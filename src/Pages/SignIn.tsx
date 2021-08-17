@@ -42,6 +42,7 @@ const SignIn = ({ history, loggedInUser, setLoggedInUser }: Props) => {
             })
             .then( (response) => {
                 setLoggedInUser(response.data.user);
+                
                 //console.log(response.data)
                 console.log(loggedInUser);
                 console.log('found user');

@@ -23,9 +23,10 @@ interface Props extends RouteComponentProps {
     setActiveChallenge: React.Dispatch<React.SetStateAction<ChallengeData|null>>;
     outChallenge: ChallengeData|null;
     setOutChallenge: React.Dispatch<React.SetStateAction<ChallengeData|null>>;
+    setTheme: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, inChallenge, setInChallenge, setOutChallenge, activeChallenge, setActiveChallenge}: Props) => {
+const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, inChallenge, setInChallenge, setOutChallenge, activeChallenge, setActiveChallenge, setTheme }: Props) => {
 //{ history }: Props
     
     const [answer, setAnswer] = useState(0); // answer is the answer to the multiplication question ... 
@@ -142,6 +143,7 @@ const Home = ({loggedInUser, setLoggedInUser, coins, setCoins, checkChallenge, i
             checkChallenge();
             setUserName(loggedInUser.name);
             setBestTime(loggedInUser.best_time);
+            setTheme(loggedInUser.theme);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loggedInUser]);

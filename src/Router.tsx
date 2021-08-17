@@ -15,6 +15,7 @@ export type LoggedInUser = {
     name: string;
     coins: number;
     best_time: number;
+    theme: string;
 }
 export type ChallengeData = { 
     id: number; 
@@ -55,6 +56,7 @@ const Router = () => {
         }
     }; // answer will grab state from next game 
 
+
     return (
         <BrowserRouter>
             <Switch>
@@ -63,10 +65,11 @@ const Router = () => {
             <Route path="/Challenge" render={(props) => (<Challenge {...props} loggedInUser={loggedInUser} outChallenge={outChallenge} 
             setOutChallenge={setOutChallenge} inChallenge={inChallenge} checkChallenge={checkChallenge} activeChallenge={activeChallenge} 
             setInChallenge={setInChallenge} setActiveChallenge={setActiveChallenge} /> )} />
-            <Route path="/TradeCoins" render={(props) => (<TradeCoins {...props} setTheme={setTheme} /> )} />
+            <Route path="/TradeCoins" render={(props) => (<TradeCoins {...props} setTheme={setTheme} coins={coins} setCoins={setCoins} 
+            loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} theme={theme} /> )} />
             <Route path="/CreateAccount" component={CreateAccount} />
             <Route path="/" render={(props) => (<Home {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} coins={coins} 
-            setCoins={setCoins} inChallenge={inChallenge} checkChallenge={checkChallenge} activeChallenge={activeChallenge} 
+            setCoins={setCoins} inChallenge={inChallenge} checkChallenge={checkChallenge} activeChallenge={activeChallenge} setTheme={setTheme}
             setInChallenge={setInChallenge} outChallenge={outChallenge} setOutChallenge={setOutChallenge} setActiveChallenge={setActiveChallenge} />)} />
             </Switch>
         </BrowserRouter>

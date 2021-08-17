@@ -51,6 +51,7 @@ const CreateAccount = ({ history }: Props) => {
                 console.log('success! New user created');
                 console.log(response.data);
                 // should I add the route to sign in?
+                history.push('/SignIn');
             })
             .catch((error) => {
                 console.log('Oops! try again', error);
